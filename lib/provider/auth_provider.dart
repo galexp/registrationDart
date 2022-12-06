@@ -9,17 +9,46 @@ import 'package:workshop/util/http_service.dart';
 enum Status {
   notRegistered,
   registering,
-  registered
+  registered,
+  notLogin,
+  loggingIn,
+  loggedIn
 }
 
 class AuthProvider with ChangeNotifier{
 
     Status _registeredStatus = Status.notRegistered;
 
+    Status _logginStatus = Status.notLogin;
+
     Status get registeredStatus => _registeredStatus;
+
+    Status get logginStatus => _logginStatus;
 
     set registeredStatus(Status value){
       registeredStatus = value;
+    }
+
+    Future<Map<String, dynamic>> login(String email, String password) async{
+      
+      final Map<String, dynamic> loginBody = {
+        "email" : email,
+        "password" : password
+      };
+
+      _logginStatus = Status.loggingIn;
+      notifyListeners();
+
+      var response = await post(Uri.parse(HttpService.login),
+        body: json.encode(loginBody),
+        headers: {'content-Type': 'application/json'}
+      ).then(onValue)
+      .catchError(onError);
+
+      _logginStatus = Status.loggedIn;
+      notifyListeners();
+
+      return response;
     }
 
     Future<Map<String, dynamic>> register(String name, 
@@ -62,7 +91,7 @@ class AuthProvider with ChangeNotifier{
           }else{
 
               var userData = responseData;
-
+              
               User user = User.fromJson(userData);
 
               UserPreference().saveRegisteredUser(user);
@@ -70,13 +99,13 @@ class AuthProvider with ChangeNotifier{
               result= {
                 "status" : 200,
                 "message" : responseData["message"],
-                'data' : responseData
+                'data' : user
               };
 
 
           }
       }
-
+        return result;
     }
 
     static onError(error){
