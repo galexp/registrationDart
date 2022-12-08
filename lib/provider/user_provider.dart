@@ -6,11 +6,11 @@ class UserProvider with ChangeNotifier{
 
     var changeName = "";
 
-    //  var token = "";
+     var token = "";
 
     void setUser(User name){
       changeName = name.user;
-      // token = name.token;
+      token = name.token;
       notifyListeners();
     }
 

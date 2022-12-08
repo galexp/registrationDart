@@ -7,6 +7,7 @@ import 'package:workshop/screen/sign_in.dart';
 
 import '../model/user.dart';
 import '../prefrence/user_prefrence.dart';
+import 'add_post.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -48,6 +49,13 @@ class HomePage extends StatelessWidget {
             ],
           ),
         ),
+      ),
+        floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const AddPostScreen()));
+        },
+        child: const Icon(Icons.add),
       ),
     );
   }

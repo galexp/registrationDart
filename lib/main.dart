@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:workshop/model/user.dart';
 import 'package:workshop/prefrence/user_prefrence.dart';
 import 'package:workshop/provider/auth_provider.dart';
+import 'package:workshop/provider/blog_provider.dart';
 import 'package:workshop/provider/user_provider.dart';
 import 'package:workshop/screen/home_page.dart';
 import 'package:workshop/screen/sign_in.dart';
@@ -13,7 +14,8 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthProvider()),
-        ChangeNotifierProvider(create: (_) => UserProvider())
+        ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (_) => BlogProvider())
       ],
       child: const MyApp()
       ),
