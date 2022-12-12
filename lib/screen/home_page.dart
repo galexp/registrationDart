@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:workshop/provider/user_provider.dart';
+import 'package:workshop/screen/post_screen.dart';
 import 'package:workshop/screen/sign_in.dart';
 
 import '../model/user.dart';
@@ -34,6 +35,18 @@ class HomePage extends StatelessWidget {
           child: Column(
             children: [
               Text("Welcome ${userProvider.changeName}"),
+
+              Container(
+                padding: const EdgeInsets.only(top: 20),
+                child: ElevatedButton(
+                  onPressed: () {
+                     
+                      Navigator.push(context,
+                       MaterialPageRoute(builder:
+                        ((context) => const PostScreen())));
+                  },
+                  child: const Text("View Post")),
+              ),
 
               Container(
                 padding: const EdgeInsets.only(top: 20),
